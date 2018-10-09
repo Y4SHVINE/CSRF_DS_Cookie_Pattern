@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Synchronizer Token Pattern</title>
+  <link rel="stylesheet" href="main.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+</head>
+
+<body>
+  <div class="section">
+    <h1>Contact Information</h1>
+    <form action="/formsubmit" method="POST">
+      <input type="text" name="address" value="New Kandy Rd, Malabe 10115" placeholder="">
+      <input type="text" name="phone" value="94 11 754 4801" placeholder="">
+      <button type="submit" id="contactSubmit" class="btn btn-primary btn-block btn-large">Submit</button>
+    </form>
+  </div>
+  <script type="text/javascript">
+  $(document).ready(function() {
+    let cookieArr = document.cookie.split(';');
+    for (let i = 0; i < cookieArr.length; i++) {
+      if (cookieArr[i].split('=')[0].trim() == "CSRF-TOKEN") {
+        var csrfToken = cookieArr[i].split('=')[1];
+        console.log("Token Found.");
+        $("#contactSubmit").before('<input type="text" name="_csrf" value="' + csrfToken.trim() + '" hidden>');
+      }
+    }
+  });
+  </script>
+</body>
+
+</html>
